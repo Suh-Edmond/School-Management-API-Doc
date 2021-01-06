@@ -1,0 +1,25 @@
+{
+  "name": "course-coverage",
+  "version": "0.0.1",
+  "private": true,
+  "description": "New Swagger API Project",
+  "keywords": [],
+  "author": "",
+  "license": "",
+  "main": "app.js",
+  "dependencies": {
+    "connect": "^3.3.5",
+    "js-yaml": "^4.0.0",
+    "swagger-connect": "^0.1.0",
+    "swagger-ui-dist": "^3.38.0"
+  },
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "should": "^7.1.0",
+    "supertest": "^1.0.0"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "swagger project test"
+  }
+}
