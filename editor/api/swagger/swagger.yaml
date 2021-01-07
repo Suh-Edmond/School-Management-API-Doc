@@ -25,87 +25,217 @@ paths:
     get:
       summary: Return a list of all person in the Star World universe
       description: Get all people resources found in the Star world universe
+      produces: application/json
       responses:
         "200":
           description: OK
-        # responses may fall through to errors
+        "404":
+          description: requested resource not found
+        "400":
+          description: Invalid resource
         default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-  /people/:id:
+          description: Failed to fetch resource.  
+  /people/schema/: 
     get:
-      parameters:
-        name: id
-        type: integer
+      summary: Return a schema for the people resource
+      description: A collection of all the properties and their datatype for a people resource
+      produces: application/json
+      responses:
+        "200":
+          description: OK  
+        "404":
+          description: Schema resource not found
+        "400":
+          description: Invalid resource  
+        default:
+          description: Failed to fetch resource.       
+  /films/: 
+    get:
+      summary: Returns a list of all films
+      description: reterieve all film resources
+      produces: application/json
       responses:
         "200":
           description: OK
-        # responses may fall through to errors
+        "404":
+          description: requested resource not found
+        "400":
+          description: Invalid resource 
         default:
-          description: Error
-          schema:
-            $ref: "#/definitions/ErrorResponse"
-
+          description: Failed to fetch resource.   
+  /films/schema/: 
+    get:
+      summary: Returns a schema for tje film resource
+      description: A collection of all properties of the film resource
+      produces: application/json
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Schema resource not found
+        "400":
+          description: Invalid resource   
+        default:
+          description: Failed to fetch resource.  
+  /starships/: 
+    get:
+      summary: Returns a list of all starships in the star world universe
+      description: Retrieve all starship resources
+      produces: application/json
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: requested resource not found
+        "400":
+          description: Invalid resource  
+        default:
+          description: Failed to fetch resource.  
+  /starships/schema/: 
+    get:
+      summary: Returns a schema for the starship resource
+      description: A collection of all the properties of a starship resource
+      produces: application/json
+      responses:
+        "200":
+          description: OK  
+        "404":
+          description: Schema resource not found
+        "400":
+          description: Invalid resource  
+        default:
+          description: Failed to fetch resource.       
+  /vehicles/: 
+    get:
+      summary: Returns a list of all vehicles in the star world universe
+      description: reterieve all vehicles resources
+      produces: application/json
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Schema resource not found
+        "400":
+          description: Invalid resource  
+        default:
+          description: Failed to fetch resource.    
+  /vehicles/schema/: 
+    get:
+      summary: Returns a schema for the vehicle resource
+      description: A collection of properties of the vehicle resource
+      produces: application/json
+      responses:
+        "200":
+          description: OK   
+        "404":
+          description: Schema resource not found
+        "400":
+          description: Invalid resource
+        default:
+          description: Failed to fetch resource.         
+  /planets/: 
+    get:
+      summary: Returns a list of all planets in the star world universe
+      description: reterieve all planets resources
+      produces: application/json
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Schema resource not found
+        "400":
+          description: Invalid resource  
+        default:
+          description: Failed to fetch resource.  
+  /planets/schema/: 
+    get:
+      summary: Returns a schema for the planet resource
+      description: A collection of all properties of the planet resource
+      produces: application/json
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Schema resource not found
+        "400":
+          description: Invalid resource 
+        default:
+          description: Failed to fetch resource.    
+  /species/: 
+    get:
+      summary: Returns a list of all species in the star world universe
+      description: reterieve all species resources
+      produces: application/json
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: requested resource not found
+        "400":
+          description: Invalid resource 
+        default:
+            description: Failed to fetch resource. 
+  /species/schema/: 
+    get:
+      summary: Returns a scheema for the species resource
+      description: A collection of all peoperties of the species resource
+      produces: application/json
+      responses:
+        "200":
+          description: OK 
+        "404":
+          description: Schema resource not found
+        "400":
+          description: Invalid resource 
+        default:
+          description: Failed to fetch resource.            
 # complex objects have schema definitions
 definitions:
-  # People:
-  #   type: object
-  #   properties:
-  #     id:
-  #       type: integer
-  #       description: Unique identifier for the person
-  #     name:
-  #       type: string
-  #       description: The name of this person
-  #     birth_year:
-  #       type: string
-  #       description: The birth year of the person, using the in-universe standard of BBY or ABY-Before the Battle of Yavin and After the Battle of Yavin
-  #     eye_color: 
-  #       type: string
-  #       description: The eye color of the person.Will be unknown or n/a if the person does not have a gender
-  #     gender:
-  #       type: string
-  #       description: The gender of this person. Either "Male", "Female" or "unknown", "n/a" if the person does not have a gender.
-  #     hair_color:
-  #       type: string
-  #       description: The hair color of this person. Will be "unknown" if not known or "n/a" if the person does not have hair.
-  #     height:
-  #       type: string
-  #       description:  The height of the person in centimeters.   
-  #     mass:
-  #       type: string 
-  #       description: The mass of the person in kilograms
-  #     skin_color:
-  #       type: string
-  #       description: THe skin colorof the person
-  #     homeworld:
-  #       type: string
-  #       description: THe URL of the planet resource, a planet that person was born or inhabits
-  #     films:
-  #       type: array
-  #       description: An array of film resource URLs that this person has been in.
-  #     species:
-  #       type: array
-  #       description: An array of species resource URLs that this person belongs to.
-  #     starships:
-  #       type: array
-  #       description: An array of starship resource URLs that this person has piloted.
-  #     vehicles:
-  #       type: array
-  #       description: An array of vehicle resource URLs that this person has piloted.
-  #     url:
-  #      type: string
-  #      description: the hypermedia URL of this resource.
-  #     created:
-  #       type: string
-  #       description: the ISO 8601 date format of the time that this resource was created.
-  #     edited:
-  #       type: string
-  #       description:  the ISO 8601 date format of the time that this resource was edited.
-  ErrorResponse:
-    required:
-      - message
+  People:
+    type: object
     properties:
-      message:
+      name: 
         type: string
+        description: The nameof the person
+      birth_year:
+        type: string
+        description:  The birth year of the person, using the in-universe standard of BBY or ABY - Before the Battle of Yavin or After the Battle of Yavin.
+      eye_color:
+        type: string
+        description: THe eye color of the person
+      gender: 
+        type: string
+        description: The gender of this person. Either "Male", "Female" or "unknown", "n/a" if the person does not have a gender.
+      hair_color:
+        type: string
+        description: The hair color of the person
+      height:
+        type: string
+        description: The height of the person in centimeters
+      mass: 
+        type: string
+        description: THe mass of the perosn in kilograms
+      skin_color:
+        type: string
+        description: The skin color of the person
+      homeworld:
+        type: string
+        description: The URL of a planet resource, a planet that this person was born on or inhabits.
+      films:
+        type: array
+        description: An array of film resource URLs that this person has been in.
+      species:
+        type: array
+        description: An array of species resource URLs that this person belongs to.
+      starships:
+        type: array
+        description: An array of starships resource URLs that this person belongs to.  
+      vehicles:
+        type: array
+        description: An array of vehicle resource URLs that this person has piloted.
+      created: 
+        type: string
+        description:  The ISO 8601 date format of the time that this resource was created.
+      edited: 
+        type: string
+        description: The ISO 8601 date format of the time that this resource was edited.
