@@ -12,7 +12,6 @@ basePath: /api
 # 
 schemes:
   # tip: remove http to make production-grade
-  - http
   - https
 # format of bodies a client can send (Content-Type)
 consumes:
@@ -21,7 +20,7 @@ consumes:
 produces:
   - application/json
 paths:
-  /people/: 
+  /people: 
     get:
       summary: Return a list of all person in the Star World universe
       description: Get all people resources found in the Star world universe
@@ -29,30 +28,206 @@ paths:
       responses:
         "200":
           description: OK
+          schema:
+            $ref: "#/definitions/People"
         "404":
           description: requested resource not found
         "400":
           description: Invalid resource
         default:
           description: Failed to fetch resource.  
-  /people/schema/: 
+  /people/:
     get:
-      summary: Return a schema for the people resource
-      description: A collection of all the properties and their datatype for a people resource
+      summary: Retrieve the resource for a person through a search using the person's name
+      description: Find the resource for a particular person using the name of the person as search parameter
+      parameters:
+        - in: query
+          name: search
+          description: The name of the person resource been search
+          required: true
+          schema:
+             type: string
+          allowReserved: true 
       produces: application/json
       responses:
         "200":
-          description: OK  
+          description: OK
+        "404":
+          description: requested resource not found
+        "400":
+          description: Invalid resource 
+        default:
+          description: Failed to fetch resource.
+  /people/{id}:
+    get:
+      summary: Get the resource of a specific person using the ID
+      description: Retrieves the resource of a person using the ID
+      parameters:
+        - in: path
+          name: id
+          description: THe ID of the person resource you to get
+          required: true
+          schema:
+            type: integer
+          allowReserved: true 
+      produces: application/json
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: requested resource not found
+        "400":
+          description: Invalid resource 
+        default:
+          description: Failed to fetch resource.
+  /films: 
+    get:
+      summary: Returns a list of all films
+      description: reterieve all film resources
+      produces: application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/Film"
+        "404":
+          description: requested resource not found
+        "400":
+          description: Invalid resource 
+        default:
+          description: Failed to fetch resource.  
+  /films/:
+    get:
+      summary: Retrieve the resource for a film through a search using the title of the film
+      description: Find the resource for a particular film using the name of the film as the search parameter
+      parameters:
+        - in: query
+          name: search
+          description: The name of the film resource been search
+          required: true
+          schema:
+             type: string
+          allowReserved: true 
+      produces: application/json
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: requested resource not found
+        "400":
+          description: Invalid resource 
+        default:
+          description: Failed to fetch resource. 
+  /films/{id}:
+    get:
+      summary: Get the resource of a specific film using the ID
+      description: Retrieves the resource of a film using the ID
+      parameters:
+        - in: path
+          name: id
+          description: THe ID of the film resource you to get
+          required: true
+          schema:
+            type: integer
+          allowReserved: true 
+      produces: application/json
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: requested resource not found
+        "400":
+          description: Invalid resource 
+        default:
+          description: Failed to fetch resource.  
+  /starships: 
+    get:
+      summary: Returns a list of all starships in the star world universe
+      description: Retrieve all starship resources
+      produces: application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/Starship"
+        "404":
+          description: requested resource not found
+        "400":
+          description: Invalid resource  
+        default:
+          description: Failed to fetch resource. 
+  /starships/:
+    get:
+      summary: Retrieve the resource for a starship through a search using either the name or model of the starship
+      description: Find the resource for a particular person using either the name or model of the starship used as the search parameter
+      parameters:
+        - in: query
+          name: search
+          description: The name or model of the starship resource been search
+          required: true
+          schema:
+             type: string
+          allowReserved: true 
+      produces: application/json
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: requested resource not found
+        "400":
+          description: Invalid resource 
+        default:
+          description: Failed to fetch resource.    
+  /starships/{id}:
+    get:
+      summary: Get the resource of a specific starship using the ID
+      description: Retrieves the resource of a starship using the ID
+      parameters:
+        - in: path
+          name: id
+          description: THe ID of the starship resource you to get
+          required: true
+          schema:
+            type: integer
+          allowReserved: true 
+      produces: application/json
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: requested resource not found
+        "400":
+          description: Invalid resource 
+        default:
+          description: Failed to fetch resource.        
+  /vehicles: 
+    get:
+      summary: Returns a list of all vehicles in the star world universe
+      description: reterieve all vehicles resources
+      produces: application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/Vehicle"
         "404":
           description: Schema resource not found
         "400":
           description: Invalid resource  
         default:
-          description: Failed to fetch resource.       
-  /films/: 
+          description: Failed to fetch resource. 
+  /vehicles/:
     get:
-      summary: Returns a list of all films
-      description: reterieve all film resources
+      summary: Retrieve the resource for a vehicle through a search using either the name or model of the vehicle
+      description: Find the resource for a particular vehicle using the name or model used as the search parameter
+      parameters:
+        - in: query
+          name: search
+          description: The name or model of the vehicle resource been search
+          required: true
+          schema:
+             type: string
+          allowReserved: true 
       produces: application/json
       responses:
         "200":
@@ -63,24 +238,18 @@ paths:
           description: Invalid resource 
         default:
           description: Failed to fetch resource.   
-  /films/schema/: 
+  /vehicles/{id}:
     get:
-      summary: Returns a schema for tje film resource
-      description: A collection of all properties of the film resource
-      produces: application/json
-      responses:
-        "200":
-          description: OK
-        "404":
-          description: Schema resource not found
-        "400":
-          description: Invalid resource   
-        default:
-          description: Failed to fetch resource.  
-  /starships/: 
-    get:
-      summary: Returns a list of all starships in the star world universe
-      description: Retrieve all starship resources
+      summary: Get the resource of a specific vehicle using the ID
+      description: Retrieves the resource of a vehicle using the ID
+      parameters: 
+        - in: path
+          name: id
+          description: The ID of the vehicle resource
+          required: true
+          schema:
+            type: integer
+          allowReserved: true
       produces: application/json
       responses:
         "200":
@@ -88,52 +257,11 @@ paths:
         "404":
           description: requested resource not found
         "400":
-          description: Invalid resource  
+          description: Invalid resource 
         default:
-          description: Failed to fetch resource.  
-  /starships/schema/: 
-    get:
-      summary: Returns a schema for the starship resource
-      description: A collection of all the properties of a starship resource
-      produces: application/json
-      responses:
-        "200":
-          description: OK  
-        "404":
-          description: Schema resource not found
-        "400":
-          description: Invalid resource  
-        default:
-          description: Failed to fetch resource.       
-  /vehicles/: 
-    get:
-      summary: Returns a list of all vehicles in the star world universe
-      description: reterieve all vehicles resources
-      produces: application/json
-      responses:
-        "200":
-          description: OK
-        "404":
-          description: Schema resource not found
-        "400":
-          description: Invalid resource  
-        default:
-          description: Failed to fetch resource.    
-  /vehicles/schema/: 
-    get:
-      summary: Returns a schema for the vehicle resource
-      description: A collection of properties of the vehicle resource
-      produces: application/json
-      responses:
-        "200":
-          description: OK   
-        "404":
-          description: Schema resource not found
-        "400":
-          description: Invalid resource
-        default:
-          description: Failed to fetch resource.         
-  /planets/: 
+          description: Failed to fetch resource.
+                 
+  /planets: 
     get:
       summary: Returns a list of all planets in the star world universe
       description: reterieve all planets resources
@@ -141,30 +269,26 @@ paths:
       responses:
         "200":
           description: OK
+          schema:
+            $ref: "#/definitions/Planet"
         "404":
           description: Schema resource not found
         "400":
           description: Invalid resource  
         default:
-          description: Failed to fetch resource.  
-  /planets/schema/: 
+          description: Failed to fetch resource. 
+  /planets/:
     get:
-      summary: Returns a schema for the planet resource
-      description: A collection of all properties of the planet resource
-      produces: application/json
-      responses:
-        "200":
-          description: OK
-        "404":
-          description: Schema resource not found
-        "400":
-          description: Invalid resource 
-        default:
-          description: Failed to fetch resource.    
-  /species/: 
-    get:
-      summary: Returns a list of all species in the star world universe
-      description: reterieve all species resources
+      summary: Retrieve the resource for a planet through a search using planet's name
+      description: Find the resource for a particular planet using the name as  search parameter 
+      parameters:
+        - in: query
+          name: search
+          description: The name of the planet resource been search
+          required: true
+          schema:
+             type: string
+          allowReserved: true 
       produces: application/json
       responses:
         "200":
@@ -174,21 +298,89 @@ paths:
         "400":
           description: Invalid resource 
         default:
-            description: Failed to fetch resource. 
-  /species/schema/: 
+          description: Failed to fetch resource.  
+  /planets/{id}:
     get:
-      summary: Returns a scheema for the species resource
-      description: A collection of all peoperties of the species resource
+      summary: Get the resource of a specific planet using the ID
+      description: Retrieves the resource of a planet using the ID
+      parameters:
+        - in: path
+          name: id
+          description: THe ID of the planet resource you to get
+          required: true
+          schema:
+            type: integer
+          allowReserved: true 
       produces: application/json
       responses:
         "200":
-          description: OK 
+          description: OK
         "404":
-          description: Schema resource not found
+          description: requested resource not found
         "400":
           description: Invalid resource 
         default:
-          description: Failed to fetch resource.            
+          description: Failed to fetch resource.                 
+  /species: 
+    get:
+      summary: Returns a list of all species in the star world universe
+      description: reterieve all species resources
+      produces: application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/Specie"  
+        "404":
+          description: requested resource not found
+        "400":
+          description: Invalid resource 
+        default:
+            description: Failed to fetch resource.  
+  /species/:
+    get:
+      summary: Retrieve the resource for a specie through a search using species's name
+      description: Find the resource for a particular specie using the name as  search parameter 
+      parameters:
+        - in: query
+          name: search
+          description: The name of the specie resource been search
+          required: true
+          schema:
+             type: string
+          allowReserved: true 
+      produces: application/json
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: requested resource not found
+        "400":
+          description: Invalid resource 
+        default:
+          description: Failed to fetch resource.   
+  /species/{id}:
+    get:
+      summary: Get the resource of a specific specie using the ID
+      description: Retrieves the resource of a specie using the ID
+      parameters:
+        - in: path
+          name: id
+          description: THe ID of the specie resource you to get
+          required: true
+          schema:
+            type: integer
+          allowReserved: true 
+      produces: application/json
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: requested resource not found
+        "400":
+          description: Invalid resource 
+        default:
+          description: Failed to fetch resource.                         
 # complex objects have schema definitions
 definitions:
   People:
@@ -202,7 +394,7 @@ definitions:
         description:  The birth year of the person, using the in-universe standard of BBY or ABY - Before the Battle of Yavin or After the Battle of Yavin.
       eye_color:
         type: string
-        description: THe eye color of the person
+        description: The eye color of the person
       gender: 
         type: string
         description: The gender of this person. Either "Male", "Female" or "unknown", "n/a" if the person does not have a gender.
@@ -239,3 +431,249 @@ definitions:
       edited: 
         type: string
         description: The ISO 8601 date format of the time that this resource was edited.
+  Film:
+    type: object
+    properties:
+      title:
+        type: string
+        description: The title of the film
+      episode_id:
+        type: integer
+        description: The episode number of the film
+      opening_crawl:
+        type: string
+        description: THe opening paragraphs at he begining of the film
+      director:
+        type: string
+        description: The name of the director of the film
+      producer:
+        type: string
+        description: The name(s) of the producer(s) of the film. Comma seperated
+      release_date:
+        type: date
+        description: The ISO8601 date format of film release at original creator country
+      species:
+        type: array
+        description: An array of species resource URLs that are in the film
+      startships:
+        type: array
+        description: An array of starships resource URLs that are in the film
+      vehicles:
+        type: array
+        description:  An array of vehicle resource URLs that are in this film.
+      characters:
+        type: array
+        description:  An array of people resource URLs that are in this film.
+      planets:
+        type: array
+        description:  An array of planet resource URLs that are in this film.
+      url:
+        type: string
+        description: The hypermedia URL of this resource
+      created: 
+        type: string
+        description: the ISO 8601 date format of the time that this resource was created.
+      edited: 
+        type: string
+        description: the ISO 8601 date format of the time that this resource was edited.
+  Starship:
+    type: object
+    properties:
+      name:
+        type: string
+        description: The title of this starship. The common nsmr such as "Death Star"
+      model:
+        type: string
+        description:  The model or official name of this starship. Such as "T-65 X-wing" or "DS-1 Orbital Battle Station".
+      starship_class:
+        type: string
+        description: The class of this starship, such as "Starfighter" or "Deep Space Mobile Battlestation"
+      manufacturer:
+        type: string
+        description: The manufacturer of this starship, comma seperated in more than one
+      cost_in_credits:
+        type: string
+        description: The cost of this starship new, in galactic credits
+      length:
+        type: string
+        description: The length of this starship in meters
+      crew:
+        type: string
+        description: The number of personnel needed to run or pilot this starship
+      passengers:
+        type: string
+        description: The number of non-essential people this starship can transport
+      max_atmosphering_speed:
+        type: string
+        description:  The maximum speed of this starship in the atmosphere. "N/A" if this starship is incapable of atmospheric flight.
+      hyperdrive_rating:
+        type: string
+        description:  The class of this starships hyperdrive
+      MGLT:
+        type: string
+        description:  The Maximum number of Megalights this starship can travel in a standard hour. A "Megalight" is a standard unit of distance and has never been defined before within the Star Wars universe. This figure is only really useful for measuring the difference in speed of starships. We can assume it is similar to AU, the distance between our Sun (Sol) and Earth.
+      cargo_capacity:
+        type: string
+        description: The maximum number of kilograms that this starship can transport
+      consumables:
+        type: string
+        description: The maximum length of time that this starship can provide consumables for its entire crew without having to resupply.
+      films:
+        type: array
+        description: An array of Film URL Resources that this starship has appeared in.
+      pilots:
+        type: array
+        description: An array of People URL Resources that this starship has appeared in.    
+      urL:
+        type: string
+        description: The hypermedia URL of this resource
+      created: 
+        type: string
+        description: the ISO 8601 date format of the time that this resource was created.
+      edited: 
+        type: string
+        description: the ISO 8601 date format of the time that this resource was edited.
+  Vehicle:
+    type: object
+    properties:
+      name:
+        type: string
+        description: The name of this vehicle. The common name, such as "Sand Crawler" or "Speeder bike".
+      model:
+        type: string
+        description:  The model or official name of this vehicle. Such as "All-Terrain Attack Transport".
+      vehicle_class:
+        type: string
+        description: The class of this vehicle, such as "Wheeled" or "Repulsorcraft".
+      manufacturer:
+        type: string
+        description: The manufacturer of this vehicle, comma seperated in more than one
+      cost_in_credits:
+        type: string
+        description: The cost of this vehicle new, in Galactic Credits.
+      length:
+        type: string
+        description: The length of this vehicle in meters
+      crew:
+        type: string
+        description: The number of personnel needed to run or pilot this vehicle
+      passengers:
+        type: string
+        description: The number of non-essential people this vehicle can transport
+      max_atmosphering_speed:
+        type: string
+        description:  The maximum speed of this vehicle in the atmosphere.
+      cargo_capacity:
+        type: string
+        description: The maximum number of kilograms that this vehicle can transport
+      consumables:
+        type: string
+        description: The maximum length of time that this vehicle can provide consumables for its entire crew without having to resupply.
+      films:
+        type: array
+        description: An array of Film URL Resources that this vehicle has appeared in.
+      pilots:
+        type: array
+        description: An array of People URL Resources that this vehicle has appeared in.    
+      urL:
+        type: string
+        description: The hypermedia URL of this resource
+      created: 
+        type: string
+        description: the ISO 8601 date format of the time that this resource was created.
+      edited: 
+        type: string
+        description: the ISO 8601 date format of the time that this resource was edited.
+  Planet:
+    type: object
+    properties:
+      name:
+        type: string
+        description: The name of this planet
+      diameter:
+        type: string
+        description: The diameter of this planet in kilometers.
+      rotation_period:
+        type: string
+        description: The number of standard hours it takes for this planet to complete a single rotation on its axis.
+      orbital_period:
+        type: string
+        description:  The number of standard days it takes for this planet to complete a single orbit of its local star.
+      gravity:
+        type: string
+        description:  A number denoting the gravity of this planet, where "1" is normal or 1 standard G. "2" is twice or 2 standard Gs. "0.5" is half or 0.5 standard Gs.
+      population:
+        type: string
+        description: The average population of sentient beings inhabiting this planet.
+      climate:
+        type: string
+        description: The climate of this planet. Comma separated if diverse.
+      terrain:
+        type: string
+        description:  The terrain of this planet. Comma separated if diverse.
+      surface_water:
+        type: string
+        description: The percentage of the planet surface that is naturally occurring water or bodies of water.
+      residents:
+        type: array
+        description: An array of People URL Resources that live on this planet.
+      films:
+        type: array
+        description: An array of Film URL Resources that this vehicle has appeared in
+      urL:
+        type: string
+        description: The hypermedia URL of this resource
+      created: 
+        type: string
+        description: the ISO 8601 date format of the time that this resource was created.
+      edited: 
+        type: string
+        description: the ISO 8601 date format of the time that this resource was edited. 
+  Specie:
+    type: object
+    properties:
+      name:
+        type: string
+        description: The name of this specie
+      classification:
+        type: string
+        description:  The classification of this species, such as "mammal" or "reptile".
+      designation:
+        type: string
+        description: The designation of this species, such as "sentient".
+      average_height:
+        type: string
+        description:  The average height of this species in centimeters.
+      average_lifespan:
+        type: string
+        description:  The average lifespan of this species in years.
+      eye_colors:
+        type: string
+        description: A comma-separated string of common eye colors for this species, "none" if this species does not typically have eyes.
+      hair_colors:
+        type: string
+        description: A comma-separated string of common hair colors for this species, "none" if this species does not typically have hair.
+      skin_colors:
+        type: string
+        description: A comma-separated string of common skin colors for this species, "none" if this species does not typically have skin.
+      language:
+        type: string
+        description:  he language commonly spoken by this species..
+      homeworld:
+        type: string
+        description: The URL of a planet resource, a planet that this species originates from.
+      people:
+        type: array
+        description: An array of poeple URL Resources that this vehicle has appeared in.
+      films:
+        type: array
+        description: An array of Film URL Resources that this vehicle has appeared in
+      urL:
+        type: string
+        description: The hypermedia URL of this resource
+      created: 
+        type: string
+        description: the ISO 8601 date format of the time that this resource was created.
+      edited: 
+        type: string
+        description: the ISO 8601 date format of the time that this resource was edited.      
